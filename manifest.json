@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Typing Extension",
+  "description": "A type tester google extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "test.html",
+    "default_icon": "/images/typing_extension_thumbnail.png"
+  }
+}

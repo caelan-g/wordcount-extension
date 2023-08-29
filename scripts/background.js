@@ -1,14 +1,35 @@
-console.log("check1");
+// console.log("working");
+let selected;
+let wordDisplay = document.createElement("word-display");
+let wordDisplayContent = document.createTextNode("Hi there and greetings!");
 
-setInterval(function () {
-  getSelectionText();
-  console.log("check2");
-}, 10);
+wordDisplay.appendChild(wordDisplayContent);
+
+let html = document.querySelector("html");
+html.appendChild(wordCount);
+html.remove();
+
+html.style.top = "100px";
+
+wordDisplay.style.top = "0px";
+wordDisplay.style.position = "relative";
+wordDisplay.style.height = "100px";
+wordDisplay.style.top = "100px";
+wordDisplay.style.backgroundColor = "green";
 
 function getSelectedText() {
-  var selected = "";
-  if (document.getSelection == true) {
-    selected = document.getSelection();
+  if (document.getSelection) {
+    selected = document.getSelection().toString();
   }
-  console.log(selected);
+  return selected;
 }
+
+setInterval(function () {
+  getSelectedText();
+  length = selected.length;
+  if (length > 0) {
+    //console.log(length);
+    wordCount = selected.split(" ").length;
+    console.log("Wordcount is " + wordCount);
+  }
+}, 100);

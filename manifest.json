@@ -7,10 +7,13 @@
     "default_popup": "test.html",
     "default_icon": "/images/typing_extension_thumbnail.png"
   },
-  "permissions": ["activeTab"],
-  "background": [
+  "content_scripts": [
     {
-      "js": ["scripts/background.js"]
+      "js": ["/scripts/background.js"],
+      "matches": [
+        "https://developer.chrome.com/docs/extensions/*",
+        "https://developer.chrome.com/docs/webstore/*"
+      ]
     }
   ]
 }

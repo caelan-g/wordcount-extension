@@ -2,6 +2,8 @@
 let selected;
 let selectedX;
 let selectedY;
+let selectedString;
+let selectedRect;
 let wordDisplay = document.createElement("word-display");
 let wordDisplayContent = document.createTextNode("Wordcount is");
 let wordDisplayNum = document.createElement("p");
@@ -24,13 +26,18 @@ wordDisplay.style.display = "inline-block";
 //function to get selected text in string
 function getSelectedText() {
   if (document.getSelection) {
-    selected = document.getSelection().toString();
+    selection = window.getSelection();
+    selectedString = selection.toString();
+
+    let range = selection.getRangeAt(0);
+
+    selectedRect = range.getBoundingClientRect();
   }
-  return selected;
+  return selectedRect, selectedString;
 }
 
 function getSelectedXY() {
-  let selectedRect = selected.getBoundingClientRect();
+  //let selectedRect = selectedText.getBoundingClientRect();
 
   //get position in related to viewport
   selectedX = selectedRect.x;
@@ -52,18 +59,21 @@ document.addEventListener("mousemove", function (event) {
 //main scan loop
 setInterval(function () {
   getSelectedText();
-  length = selected.length;
+  length = selectedString.length;
   if (length > 0) {
     getSelectedXY();
     //console.log("mouseX and Y is " + mouseX + " " + mouseY);
-    wordCount = selected.split(" ").length;
+    wordCount = selectedString.split(" ").length;
     //console.log("Wordcount is " + wordCount);
     /*wordDisplay.style.visibility = "visible";
     wordDisplay.style.top = mouseY + 10 + "px";
     wordDisplay.style.left = mouseX + "px";*/
 
-    wordDisplay.style.top = selectedY;
-    wordDisplay.style.left = selectedX;
+    wordDisplay.style.top = selectedY + 20 + "px";
+    wordDisplay.style.left = selectedX + "px";
+    wordDisplay.style.visibility = "visible";
+
+    console.log("X and Y are " + selectedX + ", " + selectedY);
 
     wordDisplayNum.textContent = wordCount;
   } else {

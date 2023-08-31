@@ -4,15 +4,23 @@ let selectedX;
 let selectedY;
 let selectedString;
 let selectedRect;
+
+let wordDisplayNum = document.createElement("word-display");
+let wordDisplayNumContent = document.createTextNode("0");
+
 let wordDisplay = document.createElement("word-display");
 let wordDisplayContent = document.createTextNode("Wordcount is");
-let wordDisplayNum = document.createElement("p");
-let wordDisplayNumContent = document.createTextNode("0");
+
+let link = document.createElement("link");
+link.rel = "stylesheet";
+link.type = "text/css";
+link.href = "stylesheet.css";
 
 wordDisplay.appendChild(wordDisplayContent);
 wordDisplayNum.appendChild(wordDisplayNumContent);
 
 let html = document.querySelector("html");
+let head = document.querySelector("head");
 let mouseX;
 let mouseY;
 html.appendChild(wordDisplay);
@@ -60,7 +68,7 @@ document.addEventListener("mousemove", function (event) {
 setInterval(function () {
   getSelectedText();
   length = selectedString.length;
-  if (length > 0) {
+  if (length > 1) {
     getSelectedXY();
     //console.log("mouseX and Y is " + mouseX + " " + mouseY);
     wordCount = selectedString.split(" ").length;
@@ -73,7 +81,7 @@ setInterval(function () {
     wordDisplay.style.left = selectedX + "px";
     wordDisplay.style.visibility = "visible";
 
-    console.log("X and Y are " + selectedX + ", " + selectedY);
+    //console.log("X and Y are " + selectedX + ", " + selectedY);
 
     wordDisplayNum.textContent = wordCount;
   } else {

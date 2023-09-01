@@ -1,4 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap");
+
 html {
   width: 300px;
   height: 200px;
+}
+
+body {
+  border-radius: 5px;
+  font-family: Outfit, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+p {
+  font-size: 15px;
 }

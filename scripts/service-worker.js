@@ -125,13 +125,14 @@ function getReadingTime() {
     timeUnits = " minute";
   }
 
+  time = Math.round(time);
+
   if (time > 1) {
     //adds prefix and punctuation depending if > 1
     timeUnits = timeUnits + "s.";
   } else {
     timeUnits = timeUnits + ".";
   }
-  time = Math.round(time);
 
   return time, timeUnits;
 }

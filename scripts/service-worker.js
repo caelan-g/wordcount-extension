@@ -118,7 +118,7 @@ function getReadingTime() {
   time = wordCount / 230; //in minutes (formula is MID)
 
   if (time < 1) {
-    //converts minutes to seconds if under 1 minute and/or adds prefix
+    //converts minutes to seconds if under 1 minute and/or adds plural
     time = time * 60;
     timeUnits = " second";
   } else {
@@ -128,7 +128,7 @@ function getReadingTime() {
   time = Math.round(time);
 
   if (time > 1) {
-    //adds prefix and punctuation depending if > 1
+    //adds plural and punctuation depending if > 1
     timeUnits = timeUnits + "s.";
   } else {
     timeUnits = timeUnits + ".";

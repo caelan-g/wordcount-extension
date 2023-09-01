@@ -4,12 +4,33 @@ let selectedX;
 let selectedY;
 let selectedString;
 let selectedRect;
+let selectedHeight;
+let selectedWidth;
+let time;
+let timeUnits;
+
+var link = document.createElement("link");
+link.setAttribute("rel", "stylesheet");
+link.setAttribute("type", "text/css");
+link.setAttribute(
+  "href",
+  "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap"
+);
 
 let wordDisplayText = document.createElement("word-display-text");
 let wordDisplayTextContent = document.createTextNode(" words.");
 
 let wordDisplayNum = document.createElement("word-display-num");
 let wordDisplayNumContent = document.createTextNode("0");
+
+let wordDisplayReadingText = document.createElement(
+  "word-display-reading-text"
+);
+let wordDisplayReadingTextContent =
+  document.createTextNode(" Reading time of ");
+
+let wordDisplayReadingNum = document.createElement("word-display-reading-num");
+let wordDisplayReadingNumContent = document.createTextNode("0 mins.");
 
 let wordDisplay = document.createElement("word-display");
 
@@ -19,17 +40,12 @@ link.type = "text/css";
 link.href = "/stylesheet.css";
 head.appendChild(link);*/
 
-var link = document.createElement("link");
-link.setAttribute("rel", "stylesheet");
-link.setAttribute("type", "text/css");
-link.setAttribute(
-  "href",
-  "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap"
-);
 document.head.appendChild(link);
 
 wordDisplayText.appendChild(wordDisplayTextContent);
 wordDisplayNum.appendChild(wordDisplayNumContent);
+wordDisplayReadingText.appendChild(wordDisplayReadingTextContent);
+wordDisplayReadingNum.appendChild(wordDisplayReadingNumContent);
 
 let html = document.querySelector("html");
 let head = document.querySelector("head");
@@ -39,6 +55,8 @@ let mouseY;
 html.appendChild(wordDisplay);
 wordDisplay.appendChild(wordDisplayNum);
 wordDisplay.appendChild(wordDisplayText);
+wordDisplay.appendChild(wordDisplayReadingText);
+wordDisplay.appendChild(wordDisplayReadingNum);
 
 //wordDisplay.style.top = "0px";
 wordDisplay.style.position = "absolute";
@@ -48,7 +66,7 @@ wordDisplay.style.display = "inline-block";
 //function to get selected text in string
 function getSelectedText() {
   if (document.getSelection) {
-    selection = window.getSelection();
+    selection = document.getSelection();
     selectedString = selection.toString();
 
     let range = selection.getRangeAt(0);
@@ -72,11 +90,30 @@ function getSelectedXY() {
   return selectedX, selectedY;
 }
 
+function getSelectedDimensions() {
+  //get height by taking bottom and top and finding difference
+  selectedHeight = selectedRect.bottom - selectedRect.top;
+
+  //get width by taking right and left and finding difference
+  selectedWidth = selectedRect.left - selectedRect.right;
+
+  return selectedHeight, selectedWidth;
+}
+
 //mouse check loop that scans on mouse move
-document.addEventListener("mousemove", function (event) {
+/*document.addEventListener("mousemove", function (event) {
   mouseX = parseInt(event.clientX);
   mouseY = parseInt(event.clientY);
-});
+});*/
+
+function getWordCount() {
+  length = selectedString.length;
+  wordCount = selectedString.split(" ").length;
+
+  return wordCount, length;
+}
+
+function getReadingTime() {}
 
 function assignStyles() {
   wordDisplay.style.backgroundColor = "rgb(240,240,240)";
@@ -92,29 +129,28 @@ function assignStyles() {
   wordDisplay.style.color = "rgb(10,10,10)";
   wordDisplay.style.transition = "0.1s all ease-in-out";
 }
-
-//main scan loop
 assignStyles();
 
+//main scan loop
 setInterval(function () {
   getSelectedText();
-  length = selectedString.length;
+  getWordCount();
+
   if (length > 0) {
     getSelectedXY();
-    //console.log("mouseX and Y is " + mouseX + " " + mouseY);
-    wordCount = selectedString.split(" ").length;
-    //console.log("Wordcount is " + wordCount);
-    /*wordDisplay.style.visibility = "visible";
-    wordDisplay.style.top = mouseY + 10 + "px";
-    wordDisplay.style.left = mouseX + "px";*/
+    getSelectedDimensions();
 
-    wordDisplay.style.top = selectedY + 20 + "px";
+    selectedHeight = selectedRect.bottom - selectedRect.top; //gets height of selected element
+
+    wordDisplay.style.top = selectedY + selectedHeight + "px";
     wordDisplay.style.left = selectedX + "px";
     wordDisplay.style.opacity = "1";
 
-    //console.log("X and Y are " + selectedX + ", " + selectedY);
-
     wordDisplayNum.textContent = wordCount;
+
+    /*wordDisplay.style.visibility = "visible";
+    wordDisplay.style.top = mouseY + 10 + "px";
+    wordDisplay.style.left = mouseX + "px";*/
   } else {
     wordDisplay.style.opacity = "0";
   }

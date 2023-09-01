@@ -68,12 +68,13 @@ function getSelectedText() {
   if (document.getSelection) {
     selection = document.getSelection();
     selectedString = selection.toString();
-
     let range = selection.getRangeAt(0);
 
     selectedRect = range.getBoundingClientRect();
+    return selectedRect, selectedString;
+  } else {
+    return;
   }
-  return selectedRect, selectedString;
 }
 
 function getSelectedXY() {
@@ -113,7 +114,27 @@ function getWordCount() {
   return wordCount, length;
 }
 
-function getReadingTime() {}
+function getReadingTime() {
+  time = wordCount / 230; //in minutes (formula is MID)
+
+  if (time < 1) {
+    //converts minutes to seconds if under 1 minute and/or adds prefix
+    time = time * 60;
+    timeUnits = " second";
+  } else {
+    timeUnits = " minute";
+  }
+
+  if (time > 1) {
+    //adds prefix and punctuation depending if > 1
+    timeUnits = timeUnits + "s.";
+  } else {
+    timeUnits = timeUnits + ".";
+  }
+  time = Math.round(time);
+
+  return time, timeUnits;
+}
 
 function assignStyles() {
   wordDisplay.style.backgroundColor = "rgb(240,240,240)";
@@ -128,6 +149,8 @@ function assignStyles() {
   wordDisplay.style.fontFamily = "Outfit, Arial, Sans-Serif";
   wordDisplay.style.color = "rgb(10,10,10)";
   wordDisplay.style.transition = "0.1s all ease-in-out";
+  wordDisplay.style.zIndex = 10;
+  wordDisplay.style.userSelect = "none";
 }
 assignStyles();
 
@@ -136,9 +159,10 @@ setInterval(function () {
   getSelectedText();
   getWordCount();
 
-  if (length > 0) {
+  if (length > 0 && document.getSelection) {
     getSelectedXY();
     getSelectedDimensions();
+    getReadingTime();
 
     selectedHeight = selectedRect.bottom - selectedRect.top; //gets height of selected element
 
@@ -147,6 +171,7 @@ setInterval(function () {
     wordDisplay.style.opacity = "1";
 
     wordDisplayNum.textContent = wordCount;
+    wordDisplayReadingNum.textContent = time + timeUnits;
 
     /*wordDisplay.style.visibility = "visible";
     wordDisplay.style.top = mouseY + 10 + "px";

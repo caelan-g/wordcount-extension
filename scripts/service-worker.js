@@ -63,6 +63,9 @@ wordDisplay.style.position = "absolute";
 //wordDisplay.style.backgroundColor = "green";
 wordDisplay.style.display = "inline-block";
 
+document.addEventListener("click", hideWordDisplay);
+hideWordDisplay();
+
 //function to get selected text in string
 function getSelectedText() {
   if (document.getSelection) {
@@ -155,6 +158,10 @@ function assignStyles() {
 }
 assignStyles();
 
+function hideWordDisplay() {
+  wordDisplay.style.opacity = "0";
+}
+
 //main scan loop
 setInterval(function () {
   getSelectedText();
@@ -178,6 +185,6 @@ setInterval(function () {
     wordDisplay.style.top = mouseY + 10 + "px";
     wordDisplay.style.left = mouseX + "px";*/
   } else {
-    wordDisplay.style.opacity = "0";
+    hideWordDisplay();
   }
 }, 10);

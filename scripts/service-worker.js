@@ -8,6 +8,8 @@ let selectedHeight;
 let selectedWidth;
 let time;
 let timeUnits;
+let timeSeconds;
+let timeText;
 
 var link = document.createElement("link");
 link.setAttribute("rel", "stylesheet");
@@ -125,19 +127,24 @@ function getReadingTime() {
     time = time * 60;
     timeUnits = " second";
   } else {
+    timeSeconds = Math.round(60 * (time - Math.round(time))); //first subtracts minutes rounded from minutes to find seconds, then finds and rounds seconds
     timeUnits = " minute";
+    //console.log(timeSeconds);
   }
 
   time = Math.round(time);
 
   if (time > 1) {
     //adds prefix and punctuation depending if > 1
-    timeUnits = timeUnits + "s.";
+    timeText = time + timeUnits + " " + timeSeconds + " seconds.";
+
+    timeText = time + timeUnits;
   } else {
-    timeUnits = timeUnits + ".";
+    //timeUnits = timeUnits + ".";
+    timeUnits = timeUnits + "s";
   }
 
-  return time, timeUnits;
+  if (timeSeconds) return timeText;
 }
 
 function assignStyles() {
@@ -179,7 +186,7 @@ setInterval(function () {
     wordDisplay.style.opacity = "1";
 
     wordDisplayNum.textContent = wordCount;
-    wordDisplayReadingNum.textContent = time + timeUnits;
+    wordDisplayReadingNum.textContent = timeText;
 
     /*wordDisplay.style.visibility = "visible";
     wordDisplay.style.top = mouseY + 10 + "px";

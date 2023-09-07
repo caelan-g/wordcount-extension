@@ -8,6 +8,8 @@ let selectedHeight;
 let selectedWidth;
 let time;
 let timeUnits;
+let timeSeconds;
+let timeText;
 
 var link = document.createElement("link");
 link.setAttribute("rel", "stylesheet");
@@ -62,6 +64,9 @@ wordDisplay.appendChild(wordDisplayReadingNum);
 wordDisplay.style.position = "absolute";
 //wordDisplay.style.backgroundColor = "green";
 wordDisplay.style.display = "inline-block";
+
+document.addEventListener("click", hideWordDisplay);
+hideWordDisplay();
 
 //function to get selected text in string
 function getSelectedText() {
@@ -122,19 +127,29 @@ function getReadingTime() {
     time = time * 60;
     timeUnits = " second";
   } else {
+    timeSeconds = Math.round(60 * (time - Math.round(time))); //first subtracts minutes rounded from minutes to find seconds, then finds and rounds seconds
     timeUnits = " minute";
+    //console.log(timeSeconds);
   }
 
   time = Math.round(time);
 
   if (time > 1) {
+<<<<<<< HEAD
     //adds plural and punctuation depending if > 1
     timeUnits = timeUnits + "s.";
+=======
+    //adds prefix and punctuation depending if > 1
+    timeText = time + timeUnits + " " + timeSeconds + " seconds.";
+
+    timeText = time + timeUnits;
+>>>>>>> 07a635bba58fffb10f1548f9741cddd31d6c9dac
   } else {
-    timeUnits = timeUnits + ".";
+    //timeUnits = timeUnits + ".";
+    timeUnits = timeUnits + "s";
   }
 
-  return time, timeUnits;
+  if (timeSeconds) return timeText;
 }
 
 function assignStyles() {
@@ -155,6 +170,10 @@ function assignStyles() {
 }
 assignStyles();
 
+function hideWordDisplay() {
+  wordDisplay.style.opacity = "0";
+}
+
 //main scan loop
 setInterval(function () {
   getSelectedText();
@@ -172,12 +191,12 @@ setInterval(function () {
     wordDisplay.style.opacity = "1";
 
     wordDisplayNum.textContent = wordCount;
-    wordDisplayReadingNum.textContent = time + timeUnits;
+    wordDisplayReadingNum.textContent = timeText;
 
     /*wordDisplay.style.visibility = "visible";
     wordDisplay.style.top = mouseY + 10 + "px";
     wordDisplay.style.left = mouseX + "px";*/
   } else {
-    wordDisplay.style.opacity = "0";
+    hideWordDisplay();
   }
 }, 10);

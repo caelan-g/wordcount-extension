@@ -129,27 +129,29 @@ function getReadingTime() {
   } else {
     timeSeconds = Math.round(60 * (time - Math.round(time))); //first subtracts minutes rounded from minutes to find seconds, then finds and rounds seconds
     timeUnits = " minute";
+    if (timeSeconds != 0) {
+    } else {
+    }
     //console.log(timeSeconds);
   }
 
   time = Math.round(time);
 
   if (time > 1) {
-<<<<<<< HEAD
-    //adds plural and punctuation depending if > 1
-    timeUnits = timeUnits + "s.";
-=======
-    //adds prefix and punctuation depending if > 1
-    timeText = time + timeUnits + " " + timeSeconds + " seconds.";
-
-    timeText = time + timeUnits;
->>>>>>> 07a635bba58fffb10f1548f9741cddd31d6c9dac
-  } else {
-    //timeUnits = timeUnits + ".";
     timeUnits = timeUnits + "s";
+  } else {
+    timeUnits = timeUnits;
   }
 
-  if (timeSeconds) return timeText;
+  if (timeSeconds == 1) {
+    timeText = time + timeUnits + " " + timeSeconds + " " + "second.";
+  } else if (timeSeconds > 1) {
+    timeText = time + timeUnits + " " + timeSeconds + " " + "seconds.";
+  } else {
+    timeText = time + timeUnits;
+  }
+
+  return timeText;
 }
 
 function assignStyles() {

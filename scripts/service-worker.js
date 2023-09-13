@@ -126,12 +126,11 @@ function getReadingTime() {
     //converts minutes to seconds if under 1 minute and/or adds plural
     time = time * 60;
     timeUnits = " second";
+    timeSeconds = 0;
   } else {
     timeSeconds = Math.round(60 * (time - Math.round(time))); //first subtracts minutes rounded from minutes to find seconds, then finds and rounds seconds
     timeUnits = " minute";
-    if (timeSeconds != 0) {
-    } else {
-    }
+
     //console.log(timeSeconds);
   }
 

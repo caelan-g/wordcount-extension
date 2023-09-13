@@ -127,19 +127,20 @@ function getReadingTime() {
     time = time * 60;
     timeUnits = " second";
     timeSeconds = 0;
+    timePunctuation = ".";
   } else {
     timeSeconds = Math.round(60 * (time - Math.round(time))); //first subtracts minutes rounded from minutes to find seconds, then finds and rounds seconds
     timeUnits = " minute";
-
+    timePunctuation = "";
     //console.log(timeSeconds);
   }
 
   time = Math.round(time);
 
   if (time > 1) {
-    timeUnits = timeUnits + "s";
+    timeUnits = timeUnits + "s" + timePunctuation;
   } else {
-    timeUnits = timeUnits;
+    timeUnits = timeUnits + timePunctuation;
   }
 
   if (timeSeconds == 1) {

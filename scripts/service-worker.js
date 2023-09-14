@@ -174,7 +174,8 @@ assignStyles();
 
 function hideWordDisplay() {
   wordDisplay.style.opacity = "0";
-  if (document.getComputedStyle(wordDisplay).getPropertyValue("opacity") == 0) {
+  console.log(window.getComputedStyle(wordDisplay).getPropertyValue("opacity"));
+  if (window.getComputedStyle(wordDisplay).getPropertyValue("opacity") == 0) {
     wordDisplay.style.top = "-100px";
     wordDisplay.style.left = "-100px";
   }

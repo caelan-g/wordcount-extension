@@ -181,6 +181,19 @@ function hideWordDisplay() {
   }
 }
 
+function showWordDisplay() {
+  wordDisplay.style.top = selectedY + selectedHeight + "px";
+  wordDisplay.style.left = selectedX + "px";
+
+  if (
+    window.getComputedStyle(wordDisplay).getPropertyValue("top") ==
+    selectedY + selectedHeight + "px"
+  ) {
+    wordDisplay.style.opacity = "1";
+  }
+  selectedHeight = selectedRect.bottom - selectedRect.top; //gets height of selected element
+}
+
 //main scan loop
 setInterval(function () {
   getSelectedText();
@@ -190,12 +203,7 @@ setInterval(function () {
     getSelectedXY();
     getSelectedDimensions();
     getReadingTime();
-
-    selectedHeight = selectedRect.bottom - selectedRect.top; //gets height of selected element
-
-    wordDisplay.style.top = selectedY + selectedHeight + "px";
-    wordDisplay.style.left = selectedX + "px";
-    wordDisplay.style.opacity = "1";
+    showWordDisplay();
 
     wordDisplayNum.textContent = wordCount;
     wordDisplayReadingNum.textContent = timeText;
